@@ -10,13 +10,24 @@ import com.mkrcah.fractals.Complex
 object Main {
 
 
+    def OutputDir = "sample-outputs"
 
     def main(args: Array[String]) {
 
-        val regionToRender = Region2c(Complex(-2, 1), Complex(1, -1))
+        val regionToRender = Region2c(Complex(-2.1, 1.3), Complex(0.8, -1.3))
         val fractal = new Mandelbrot(escapeTimeMax = 300)
 
-        // Render text
+        // Mandelbrot: Render image
+        val ImageWidth = 1000
+        val ImageHeightMandelbrot = (ImageWidth * regionToRender.hwRatio).toInt
+        val renderer = new ImageRenderer(
+            imgSize = Size2i(ImageWidth, ImageHeightMandelbrot),
+            region = regionToRender,
+            pal = HuePalette,
+            fractal = new Mandelbrot(escapeTimeMax = 300))
+        save(renderer, "mandelbrot.png")
+
+        // Mandelbrot: Render text
         val textWidth = 100
         val textHeight = (textWidth * regionToRender.hwRatio).toInt
         val textRenderer = new TextRenderer(
@@ -24,31 +35,43 @@ object Main {
             region = regionToRender,
             fractal = fractal,
             charMapper = if (_) '*' else ' ')
-        val textFile = new PrintWriter("sample-outputs/mandelbrot.txt")
-        textRenderer.render().foreach(textFile.println)
-        textFile.close()
+        save(textRenderer, "mandelbrot.txt")
 
 
-        // Render image
-        val ImageWidth = 1000
-        val ImageHeight = (ImageWidth * regionToRender.hwRatio).toInt
-        val renderer = new ImageRenderer(
-            imgSize = Size2i(ImageWidth, ImageHeight),
-            region = regionToRender,
-            pal = HuePalette,
-            fractal = new Mandelbrot(escapeTimeMax = 300))
+        // Julia: Render images
+        val regionJulia = Region2c(Complex(-2, 1.2), Complex(2, -1.2))
+        val ImageHeight = (ImageWidth * regionJulia.hwRatio).toInt
+        val cParams = Array(
+            Complex(-0.4, 0.6),
+            Complex(0.285,0.01),
+            Complex(-0.835,-0.2321))
 
-        println("Rendering started")
+        cParams.foreach((c) => {
+            val renderer = new ImageRenderer(
+                imgSize = Size2i(ImageWidth, ImageHeight),
+                region = regionJulia,
+                pal = HuePalette,
+                fractal = new Julia(escapeTimeMax = 300, c=c))
+            save(renderer, s"julia(${c.re},${c.im}).png")
+        })
+
+
+
+    }
+    
+    def save(renderer:ImageRenderer, filename: String) {
+        println(s"Rendering of $filename started")
         val img = renderer.render()
-        println(s"Rendering finished")
-
-        val filename = "sample-outputs/mandelbrot.png"
-        ImageIO.write(img, "png", new File(filename))
+        ImageIO.write(img, "png", new File(s"$OutputDir/$filename"))
         println(s"Output saved to $filename")
-
-
-//
-
+    }
+    
+    def save(renderer:TextRenderer, filename: String) {
+        println(s"Rendering of $filename started")
+        val textFile = new PrintWriter(s"$OutputDir/$filename")
+        renderer.render().foreach(textFile.println)
+        println(s"Output saved to $filename")
+        textFile.close()
     }
 
 
