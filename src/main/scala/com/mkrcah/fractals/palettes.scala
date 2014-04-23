@@ -1,4 +1,4 @@
-package com.mkrcah
+package com.mkrcah.fractals
 
 abstract class Palette {
     def get(index:Int): ColorRGB

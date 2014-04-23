@@ -1,8 +1,9 @@
 package com.mkrcah
 
-import java.io.File
 import javax.imageio.ImageIO
-
+import java.io.File
+import com.mkrcah.fractals._
+import com.mkrcah.fractals.{Size, Region2c, Complex}
 
 object Main extends App {
 
@@ -17,5 +18,3 @@ object Main extends App {
     ImageIO.write(image, "png", new File("out/saved.png"))
 
 }
-
-

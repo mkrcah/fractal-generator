@@ -1,7 +1,6 @@
-package com.mkrcah
+package com.mkrcah.fractals
 
 import java.awt.image.BufferedImage
-
 
 
 abstract class ImageRenderer(imgSize: Size[Int]) {

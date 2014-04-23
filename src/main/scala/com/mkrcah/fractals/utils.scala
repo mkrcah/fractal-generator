@@ -1,4 +1,4 @@
-package com.mkrcah
+package com.mkrcah.fractals
 
 /** Complex number **/
 case class Complex(re: Double, im: Double) {

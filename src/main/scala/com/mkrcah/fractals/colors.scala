@@ -1,5 +1,4 @@
-package com.mkrcah
-
+package com.mkrcah.fractals
 
 abstract class Color {
     def toRGB : ColorRGB
