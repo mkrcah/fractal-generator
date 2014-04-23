@@ -10,7 +10,7 @@ case class Complex(re: Double, im: Double) {
 /** Point in 2d discrete space **/
 case class Point2i(x: Int, y:Int)
 
-case class Size[T](width: T, height: T)
+case class Size2i(width: Int, height: Int)
 
 case class Region2c(tl: Complex, br: Complex) {
     val width = br.re - tl.re
