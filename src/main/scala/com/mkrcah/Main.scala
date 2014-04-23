@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage
 import com.mkrcah.fractals.Size
 import com.mkrcah.fractals.Region2c
 import com.mkrcah.fractals.Complex
+import scala.annotation.tailrec
 
 object Main {
 
@@ -18,6 +19,7 @@ object Main {
 
 
     def main(args: Array[String]) {
+
 
         val img = new BufferedImage(ImageSize.width, ImageSize.height, BufferedImage.TYPE_INT_RGB)
             with DrawableImage
