@@ -1,6 +1,6 @@
-#### Mandelbrot fractal generator
+#### Fractal generator
 
-Generator of Mandelbrot fractals written in Scala. Compile and run with `sbt run`.
+Generator of Mandelbrot and Julia fractals written in Scala. Compile and run with `sbt run`.
 
 Sample outputs:
 
