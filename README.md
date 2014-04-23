@@ -8,7 +8,7 @@ Sample outputs:
 
 ![Julia 2](https://raw.githubusercontent.com/mkrcah/fractal-generator/master/sample-outputs/julia\(0.285,0.01\).png)
 
-![Julia 3](https://raw.githubusercontent.com/mkrcah/fractal-generator/master/sample-outputs/mandelbrot.png)
+![Julia 3](https://raw.githubusercontent.com/mkrcah/fractal-generator/master/sample-outputs/julia\(-0.835,-0.2321\).png)
 
-![Mandelbrot](https://raw.githubusercontent.com/mkrcah/fractal-generator/master/sample-outputs/julia\(-0.835,-0.2321\).png)
+![Mandelbrot](https://raw.githubusercontent.com/mkrcah/fractal-generator/master/sample-outputs/mandelbrot.png)
 
