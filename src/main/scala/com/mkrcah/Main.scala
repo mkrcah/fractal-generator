@@ -11,15 +11,16 @@ object Main {
 
         val complexRegion = Region2c(Complex(-2, 1), Complex(1, -1))
 
-        val imageWidth = 500
-        val imageHeight = Math.abs(imageWidth * complexRegion.size.height / complexRegion.size.width).toInt
+        val imageWidth = 1000
+        val imageHeight = Math.abs(imageWidth * complexRegion.height / complexRegion.width).toInt
         val size = Size(imageWidth, imageHeight)
 
-        val renderer = new MandelbrotRenderer(size, complexRegion, GrayscalePalette)
+        val renderer = new MandelbrotRenderer(size, complexRegion, HuePalette)
 
         println("Rendering started")
+
         val image = renderer.render()
-        val filename = "mandelbrot.png"
+        val filename = "sample-outputs/mandelbrot-zoom.png"
         ImageIO.write(image, "png", new File(filename))
 
         println(s"Rendering finished, result saved to $filename")

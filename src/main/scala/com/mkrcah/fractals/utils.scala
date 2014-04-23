@@ -14,7 +14,11 @@ case class Size[T](width: T, height: T)
 
 
 case class Region2c(tl: Complex, br: Complex) {
-    def size = Size[Double](width = br.re - tl.re, height = br.im - tl.im)
+    val width = br.re - tl.re
+    val height = br.im - tl.im
 }
 
+case class Region2i(tl: Point2i, br: Point2i) {
+    def size = Size[Double](width = br.x - tl.x, height = br.y - tl.y)
+}
 
