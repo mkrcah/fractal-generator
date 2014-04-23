@@ -30,10 +30,13 @@ class MandelbrotRenderer(imgSize: Size[Int], region: Region2c, palette: Palette)
     extends ImageRenderer(imgSize)
 {
 
+    private val ITER_MAX = 1000
+
     override def getColorFor(imgCoords: Point2i): ColorRGB = {
         val complex = transformToComplex(imgCoords, region)
         val escapeTime = getEscapeTime(complex)
-        palette.get(escapeTime)
+        val colorIdx = ((escapeTime.toFloat / ITER_MAX) * palette.maxIndex).toInt
+        palette.get(colorIdx)
     }
 
     private def transformToComplex(imgCoords: Point2i, area: Region2c)
@@ -43,11 +46,10 @@ class MandelbrotRenderer(imgSize: Size[Int], region: Region2c, palette: Palette)
         )
 
 
-    private val ITER_MAX = 255
-    private val ESCAPE_THRESHOLD_SQR = 2*2
 
     private def getEscapeTime(c:Complex):Int = {
 
+        val ESCAPE_THRESHOLD_SQR = 2*2
         def mapping(z: Complex, c:  Complex) = z * z + c
 
         var res = Complex(0,0)
