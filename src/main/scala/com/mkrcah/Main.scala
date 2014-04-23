@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage
 import com.mkrcah.fractals.Size
 import com.mkrcah.fractals.Region2c
 import com.mkrcah.fractals.Complex
-import scala.annotation.tailrec
 
 object Main {
 

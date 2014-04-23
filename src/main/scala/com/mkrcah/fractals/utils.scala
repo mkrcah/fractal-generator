@@ -4,7 +4,7 @@ package com.mkrcah.fractals
 case class Complex(re: Double, im: Double) {
      def +(y: Complex) = Complex(re + y.re, im + y.im)
      def *(y: Complex) = Complex(re*y.re - im*y.im, im*y.re + re*y.im)
-     def absSquared = re*re + im*im
+     def absSqr = re*re + im*im
  }
 
 /** Point in 2d discrete space **/

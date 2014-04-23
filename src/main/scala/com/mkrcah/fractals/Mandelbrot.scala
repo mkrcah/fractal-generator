@@ -1,5 +1,7 @@
 package com.mkrcah.fractals
 
+import scala.annotation.tailrec
+
 
 class Mandelbrot(imgSize: Size[Int], region: Region2c, palette: Palette) {
 
@@ -26,17 +28,17 @@ class Mandelbrot(imgSize: Size[Int], region: Region2c, palette: Palette) {
 
     private def getEscapeTime(c:Complex):Int = {
 
-        val EscapeRadius = 2
-        def mapping(z: Complex, c:  Complex) = z * z + c
+        val EscapeRadiusSqr = 4
 
-        var res = Complex(0,0)
-        var i = 0
-
-        while (i < EscapeTimeMax && res.absSquared <= EscapeRadius*EscapeRadius) {
-            res = mapping(res, c)
-            i = i + 1
+        @tailrec
+        def getEscapeTime(counter:Int, z:Complex):Int = {
+            if (z.absSqr > EscapeRadiusSqr) counter
+            else if (counter == EscapeTimeMax) EscapeTimeMax
+            else getEscapeTime(counter+1, z*z+c)
         }
-        i
+
+        getEscapeTime(0, new Complex(0,0))
+
     }
 
 
