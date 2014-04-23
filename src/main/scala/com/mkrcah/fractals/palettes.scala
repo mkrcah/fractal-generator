@@ -11,7 +11,6 @@ abstract class Palette {
     def maxIndex = size - 1
     def getByIndex(i: Int): ColorRGB
 
-
 }
 
 object Palette1 extends Palette {

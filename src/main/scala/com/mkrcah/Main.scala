@@ -3,27 +3,34 @@ package com.mkrcah
 import javax.imageio.ImageIO
 import java.io.File
 import com.mkrcah.fractals._
-import com.mkrcah.fractals.{Size, Region2c, Complex}
+import java.awt.image.BufferedImage
+import com.mkrcah.fractals.Size
+import com.mkrcah.fractals.Region2c
+import com.mkrcah.fractals.Complex
 
 object Main {
 
+    val ComplexRegionToRender = Region2c(Complex(-2, 1), Complex(1, -1))
+    
+    val ImageWidth = 1000
+    val ImageHeight = Math.abs(ImageWidth * ComplexRegionToRender.hwRatio).toInt
+    val ImageSize = Size(ImageWidth, ImageHeight)
+
+
     def main(args: Array[String]) {
 
-        val complexRegion = Region2c(Complex(-2, 1), Complex(1, -1))
+        val img = new BufferedImage(ImageSize.width, ImageSize.height, BufferedImage.TYPE_INT_RGB)
+            with DrawableImage
 
-        val imageWidth = 1000
-        val imageHeight = Math.abs(imageWidth * complexRegion.height / complexRegion.width).toInt
-        val size = Size(imageWidth, imageHeight)
-
-        val renderer = new MandelbrotRenderer(size, complexRegion, HuePalette)
+        val renderer = new Mandelbrot(ImageSize, ComplexRegionToRender, HuePalette)
 
         println("Rendering started")
+        img.draw(renderer.getColorFor)
 
-        val image = renderer.render()
         val filename = "sample-outputs/mandelbrot-zoom.png"
-        ImageIO.write(image, "png", new File(filename))
+        println(s"Rendering finished, saving results to $filename")
+        ImageIO.write(img, "png", new File(filename))
 
-        println(s"Rendering finished, result saved to $filename")
     }
 
 
