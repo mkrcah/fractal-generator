@@ -14,25 +14,25 @@ object Main {
 
     def main(args: Array[String]) {
 
-        val regionToRender = Region2c(Complex(-2.1, 1.3), Complex(0.8, -1.3))
-        val fractal = new Mandelbrot(escapeTimeMax = 300)
+        val imgHeight = 1000
 
         // Mandelbrot: Render image
-        val ImageWidth = 1000
-        val ImageHeightMandelbrot = (ImageWidth * regionToRender.hwRatio).toInt
+        val regMandelbrot = Region2c(Complex(-2.1, 1.3), Complex(0.8, -1.3))
+        val imgHeightMandelbrot = (imgHeight * regMandelbrot.hwRatio).toInt
+        val fractal = new Mandelbrot(escapeTimeMax = 300)
         val renderer = new ImageRenderer(
-            imgSize = Size2i(ImageWidth, ImageHeightMandelbrot),
-            region = regionToRender,
+            imgSize = Size2i(imgHeight, imgHeightMandelbrot),
+            region = regMandelbrot,
             pal = HuePalette,
             fractal = new Mandelbrot(escapeTimeMax = 300))
         save(renderer, "mandelbrot.png")
 
         // Mandelbrot: Render text
         val textWidth = 100
-        val textHeight = (textWidth * regionToRender.hwRatio).toInt
+        val textHeight = (textWidth * regMandelbrot.hwRatio).toInt
         val textRenderer = new TextRenderer(
             imgSize = Size2i(textWidth, textHeight),
-            region = regionToRender,
+            region = regMandelbrot,
             fractal = fractal,
             charMapper = if (_) '*' else ' ')
         save(textRenderer, "mandelbrot.txt")
@@ -40,7 +40,7 @@ object Main {
 
         // Julia: Render images
         val regionJulia = Region2c(Complex(-2, 1.2), Complex(2, -1.2))
-        val ImageHeight = (ImageWidth * regionJulia.hwRatio).toInt
+        val imageHeightJulia = (imgHeight * regionJulia.hwRatio).toInt
         val cParams = Array(
             Complex(-0.4, 0.6),
             Complex(0.285,0.01),
@@ -48,14 +48,12 @@ object Main {
 
         cParams.foreach((c) => {
             val renderer = new ImageRenderer(
-                imgSize = Size2i(ImageWidth, ImageHeight),
+                imgSize = Size2i(imgHeight, imageHeightJulia),
                 region = regionJulia,
                 pal = HuePalette,
                 fractal = new Julia(escapeTimeMax = 300, c=c))
             save(renderer, s"julia(${c.re},${c.im}).png")
         })
-
-
 
     }
     
