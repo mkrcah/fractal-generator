@@ -1,7 +1,7 @@
 package com.mkrcah
 
 import javax.imageio.ImageIO
-import java.io.File
+import java.io.{PrintWriter, File}
 import com.mkrcah.fractals._
 import com.mkrcah.fractals.Size2i
 import com.mkrcah.fractals.Region2c
@@ -13,23 +13,41 @@ object Main {
 
     def main(args: Array[String]) {
 
-        val ComplexRegionToRender = Region2c(Complex(-2, 1), Complex(1, -1))
-        val ImageWidth = 1000
-        val ImageHeight = Math.abs(ImageWidth * ComplexRegionToRender.hwRatio).toInt
+        val regionToRender = Region2c(Complex(-2, 1), Complex(1, -1))
+        val fractal = new Mandelbrot(escapeTimeMax = 300)
 
-        val renderer = new ImageFractalRenderer(
+        // Render text
+        val textWidth = 100
+        val textHeight = (textWidth * regionToRender.hwRatio).toInt
+        val textRenderer = new TextRenderer(
+            imgSize = Size2i(textWidth, textHeight),
+            region = regionToRender,
+            fractal = fractal,
+            charMapper = if (_) '*' else ' ')
+        val textFile = new PrintWriter("sample-outputs/mandelbrot.txt")
+        textRenderer.render().foreach(textFile.println)
+        textFile.close()
+
+
+        // Render image
+        val ImageWidth = 1000
+        val ImageHeight = (ImageWidth * regionToRender.hwRatio).toInt
+        val renderer = new ImageRenderer(
             imgSize = Size2i(ImageWidth, ImageHeight),
-            region = ComplexRegionToRender,
+            region = regionToRender,
             pal = HuePalette,
-            fractal = new MandelbrotSet(escapeTimeMax = 300))
+            fractal = new Mandelbrot(escapeTimeMax = 300))
 
         println("Rendering started")
         val img = renderer.render()
         println(s"Rendering finished")
 
-        val filename = "sample-outputs/mandelbrot-zoom.png"
+        val filename = "sample-outputs/mandelbrot.png"
         ImageIO.write(img, "png", new File(filename))
         println(s"Output saved to $filename")
+
+
+//
 
     }
 

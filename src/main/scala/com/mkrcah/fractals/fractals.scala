@@ -2,13 +2,13 @@ package com.mkrcah.fractals
 
 import scala.annotation.tailrec
 
-trait FractalSet {
+trait Fractal {
     def getEscapeTimeFor(c:Complex): Int
     def escapeTimeMax(): Int
 }
 
 
-case class MandelbrotSet(escapeTimeMax: Int) extends FractalSet {
+case class Mandelbrot(escapeTimeMax: Int) extends Fractal {
 
     override def getEscapeTimeFor(c: Complex): Int = {
 
