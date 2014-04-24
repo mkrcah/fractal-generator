@@ -6,7 +6,7 @@ trait DrawableImage extends BufferedImage {
 
     def getPixels: Iterable[Point2i] = {
         for (y <- 0 to getHeight - 1; x <- 0 to getWidth - 1)
-        yield Point2i(x, y)
+            yield Point2i(x, y)
     }
 
     def draw(f: Point2i => ColorRGB) = {
