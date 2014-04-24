@@ -21,7 +21,7 @@ abstract class Renderer(imageSize: Size2i, region: Region2c, fractal:Fractal) {
 
 
 class ImageRenderer(imgSize: Size2i, region: Region2c, pal: Palette, fractal:Fractal)
-    extends Renderer(imgSize, region: Region2c, fractal: Fractal){
+    extends Renderer(imgSize, region, fractal){
 
     def render(): BufferedImage = {
         val img = new BufferedImage(imgSize.width, imgSize.height, BufferedImage.TYPE_INT_RGB)
