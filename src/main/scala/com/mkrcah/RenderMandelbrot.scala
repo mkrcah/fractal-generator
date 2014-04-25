@@ -12,7 +12,7 @@ object RenderMandelbrot {
     def main(args: Array[String]) {
 
         val region = Region2c(Complex(-2.1, 1.3), Complex(0.8, -1.3))
-        val fractal = new Mandelbrot(escapeTimeMax = 300)
+        val fractal = new Mandelbrot()
 
         // Render image
         val imgWidth = 1000
@@ -20,7 +20,7 @@ object RenderMandelbrot {
         val renderer = new ImageRenderer(
             imgSize = Size2i(imgWidth, imgHeight),
             region = region, pal = HuePalette,
-            fractal = new Mandelbrot(escapeTimeMax = 300))
+            fractal = new Mandelbrot())
         save(renderer, "mandelbrot.png")
 
         // Mandelbrot: Render text

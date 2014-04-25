@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage
 
 abstract class Renderer(imageSize: Size2i, region: Region2c, fractal:Fractal) {
 
-    protected val escapeTimeMax = fractal.escapeTimeMax()
+    protected val escapeTimeMax = fractal.escapeTimeMax
 
     protected def getEscapeTime(p:Point2i): Int =  {
         val c = imgPointToComplex(p)

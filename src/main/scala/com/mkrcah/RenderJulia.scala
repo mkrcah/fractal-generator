@@ -16,21 +16,21 @@ object RenderJulia {
         val imageHeightJulia = (imgHeight * region.hwRatio).toInt
 
         // interesting Julia params
-        val cParams = Array(
+        val inits = Array(
             Complex(-0.4, 0.6),
             Complex(0.285,0.01),
             Complex(-0.835,-0.2321)
         )
 
-        cParams.foreach((c) => {
+        inits.foreach((init) => {
 
             val renderer = new ImageRenderer(
                 imgSize = Size2i(imgHeight, imageHeightJulia),
                 region = region,
                 pal = HuePalette,
-                fractal = new Julia(escapeTimeMax = 300, c=c))
+                fractal = new Julia(init))
 
-            save(renderer, s"julia(${c.re},${c.im}).png")
+            save(renderer, s"julia(${init.re},${init.im}).png")
         })
 
     }

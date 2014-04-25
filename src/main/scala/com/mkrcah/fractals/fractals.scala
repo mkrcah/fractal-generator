@@ -2,45 +2,32 @@ package com.mkrcah.fractals
 
 import scala.annotation.tailrec
 
-trait Fractal {
-    def getEscapeTimeFor(c:Complex): Int
-    def escapeTimeMax(): Int
-}
 
 
-case class Mandelbrot(escapeTimeMax: Int) extends Fractal {
+abstract class Fractal(val accInit:(Complex)=>Complex, val recCall:(Complex,Complex)=>Complex,
+                       val escapeTimeMax:Int, val escapeRadius:Int=2) {
 
-    override def getEscapeTimeFor(c: Complex): Int = {
+    val EscapeRadiusSqr = escapeRadius * escapeRadius
 
-        val EscapeRadiusSqr = 4
+    def getEscapeTimeFor(c: Complex): Int = {
 
         @tailrec
-        def getEscapeTime(counter:Int, z:Complex):Int = {
-            if (z.absSqr > EscapeRadiusSqr) counter
+        def getEscapeTime(counter:Int, acc:Complex):Int = {
+            if (acc.absSqr > EscapeRadiusSqr) counter
             else if (counter == escapeTimeMax) escapeTimeMax
-            else getEscapeTime(counter+1, z*z+c)
+            else getEscapeTime(counter+1, recCall(c, acc))
         }
 
-        getEscapeTime(0, new Complex(0,0))
+        getEscapeTime(0, accInit(c))
 
     }
+
 }
 
 
-case class Julia(escapeTimeMax: Int, c:Complex) extends Fractal {
+class Mandelbrot(quality:Int=300) extends Fractal(
+    accInit=(c)=>new Complex(0,0), recCall=(c,acc) => acc * acc + c, escapeTimeMax=quality )
 
-    override def getEscapeTimeFor(z: Complex): Int = {
+class Julia(param:Complex, quality:Int=300) extends Fractal(
+    accInit=(c)=>c, recCall = (_,acc) => acc*acc + param, escapeTimeMax=quality)
 
-        val EscapeRadiusSqr = 4
-
-        @tailrec
-        def getEscapeTime(counter:Int, z:Complex):Int = {
-            if (z.absSqr > EscapeRadiusSqr) counter
-            else if (counter == escapeTimeMax) escapeTimeMax
-            else getEscapeTime(counter+1, z*z+c)
-        }
-
-        getEscapeTime(0, z)
-
-    }
-}
